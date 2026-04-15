@@ -417,26 +417,33 @@ namespace SWO1.Visualization
                 Confidence = 1f
             });
 
-            // 我方 3 个排
+            // 我方 4 个排
             AddOrUpdateMarker(new SandTableMarker
             {
                 MarkerId = "platoon_1", UnitId = "platoon_1",
                 Position = new Vector3(0, 0, 8).ToVector2XZ(),
-                IsEnemy = false, LastUpdateTime = 0f, Confidence = 1f, TroopCount = 55
+                IsEnemy = false, LastUpdateTime = 0f, Confidence = 1f, TroopCount = 60
             });
 
             AddOrUpdateMarker(new SandTableMarker
             {
                 MarkerId = "platoon_2", UnitId = "platoon_2",
                 Position = new Vector3(-6, 0, 5).ToVector2XZ(),
-                IsEnemy = false, LastUpdateTime = 0f, Confidence = 1f, TroopCount = 48
+                IsEnemy = false, LastUpdateTime = 0f, Confidence = 1f, TroopCount = 52
             });
 
             AddOrUpdateMarker(new SandTableMarker
             {
                 MarkerId = "platoon_3", UnitId = "platoon_3",
                 Position = new Vector3(6, 0, 5).ToVector2XZ(),
-                IsEnemy = false, LastUpdateTime = 0f, Confidence = 1f, TroopCount = 42
+                IsEnemy = false, LastUpdateTime = 0f, Confidence = 1f, TroopCount = 45
+            });
+
+            AddOrUpdateMarker(new SandTableMarker
+            {
+                MarkerId = "platoon_4", UnitId = "platoon_4",
+                Position = new Vector3(0, 0, 3).ToVector2XZ(),
+                IsEnemy = false, LastUpdateTime = 0f, Confidence = 1f, TroopCount = 38
             });
         }
 
@@ -715,7 +722,7 @@ namespace SWO1.Visualization
                 // 新单位
                 AddOrUpdateMarker(new SandTableMarker
                 {
-                    MarkerId = markerId,
+                    MarkerId = data.UnitId,
                     UnitId = data.UnitId,
                     Position = worldPos,
                     IsEnemy = data.IsEnemy,
