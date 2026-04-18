@@ -444,9 +444,9 @@ namespace SWO1.CommandPost
 
         private void LockMouseInternal()
         {
-            mouseLocked = true;
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
+            mouseLocked = false;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
 
         #endregion

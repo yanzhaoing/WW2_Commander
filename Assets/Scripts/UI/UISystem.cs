@@ -1328,7 +1328,7 @@ namespace SWO1.UI
             if (sendFeedbackRipple != null)
             {
                 sendFeedbackRipple.gameObject.SetActive(true);
-                int typeIdx = (int)cmd.CommandType;
+                int typeIdx = (int)cmd.Type;
                 typeIdx = Mathf.Clamp(typeIdx, 0, TypeColors.Length - 1);
                 sendFeedbackRipple.color = TypeColors[typeIdx];
             }

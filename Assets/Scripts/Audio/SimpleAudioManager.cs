@@ -59,7 +59,21 @@ namespace SWO1.Audio
         [Tooltip("无线电杂音")]
         [SerializeField] private AudioClip radioStaticClip;
 
+        [Header("额外音效")]
+        [Tooltip("警报声")]
+        [SerializeField] private AudioClip alarmClip;
+
+        [Tooltip("发报机声")]
+        [SerializeField] private AudioClip telegraphClip;
+
+        [Tooltip("胜利音乐")]
+        [SerializeField] private AudioClip victoryClip;
+
+        [Tooltip("失败音乐")]
+        [SerializeField] private AudioClip defeatClip;
+
         [Header("音量")]
+
         [Range(0f, 1f)] [SerializeField] private float masterVolume = 1f;
         [Range(0f, 1f)] [SerializeField] private float bgmVolume = 0.4f;
         [Range(0f, 1f)] [SerializeField] private float sfxVolume = 0.8f;
@@ -402,6 +416,54 @@ namespace SWO1.Audio
             if (clips == null || clips.Length == 0) return;
             var clip = clips[Random.Range(0, clips.Length)];
             PlaySFX(clip, position);
+        }
+
+        #endregion
+
+        #region 额外音效
+
+        /// <summary>
+        /// 播放警报声
+        /// </summary>
+        public void PlayAlarm(AudioClip clip = null)
+        {
+            if (clip != null)
+                PlaySFX(clip);
+            else
+                Debug.Log("[Audio] 警报声 (无 Clip，跳过)");
+        }
+
+        /// <summary>
+        /// 播放发报机/电键声
+        /// </summary>
+        public void PlayTelegraph(AudioClip clip = null)
+        {
+            if (clip != null)
+                PlaySFX(clip);
+            else
+                Debug.Log("[Audio] 发报机声 (无 Clip，跳过)");
+        }
+
+        /// <summary>
+        /// 播放胜利音乐
+        /// </summary>
+        public void PlayVictory(AudioClip clip = null)
+        {
+            if (clip != null)
+                PlayBGM(clip);
+            else
+                Debug.Log("[Audio] 胜利音乐 (无 Clip，跳过)");
+        }
+
+        /// <summary>
+        /// 播放失败音乐
+        /// </summary>
+        public void PlayDefeat(AudioClip clip = null)
+        {
+            if (clip != null)
+                PlayBGM(clip);
+            else
+                Debug.Log("[Audio] 失败音乐 (无 Clip，跳过)");
         }
 
         #endregion
