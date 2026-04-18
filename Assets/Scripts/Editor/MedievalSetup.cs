@@ -33,6 +33,20 @@ namespace SWO1.Editor
             CreateGameOverPanel(canvas.transform);
             CreateGameSystems();
 
+            // 保存场景
+            string scenePath = "Assets/Scenes/Medieval.unity";
+            System.IO.Directory.CreateDirectory(Application.dataPath + "/Scenes");
+            var scene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
+            EditorSceneManager.SaveScene(scene, scenePath);
+
+            // 添加到 Build Settings
+            var buildScenes = EditorBuildSettings.scenes.ToList();
+            if (!buildScenes.Any(s => s.path == scenePath))
+            {
+                buildScenes.Insert(0, new EditorBuildSettingsScene(scenePath, true));
+                EditorBuildSettings.scenes = buildScenes.ToArray();
+            }
+
             Debug.Log("[MedievalSetup] ✅ 中世纪骑兵场景搭建完成！");
             EditorUtility.DisplayDialog("铁蹄 — KNIGHT'S MARCH",
                 "场景搭建完成！\n\n点击 Play 即可体验。", "OK");
