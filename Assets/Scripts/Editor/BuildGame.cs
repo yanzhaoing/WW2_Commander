@@ -1,6 +1,7 @@
 // BuildGame.cs — 命令行打包脚本
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Rendering;
 using System.IO;
 
 namespace SWO1.Editor
@@ -13,12 +14,16 @@ namespace SWO1.Editor
             string outputPath = "/home/yanzhaoharsh/桌面/qaq/ww2 commander (主界面)/ww2 commander (主界面)";
             Directory.CreateDirectory(Path.GetDirectoryName(outputPath));
 
+            // 减少 shader 变体编译
+            PlayerSettings.SetShaderChunkCount(4);
+            PlayerSettings.SetShaderChunkSizeInMB(16);
+
             var options = new BuildPlayerOptions
             {
                 scenes = GetEnabledScenes(),
                 locationPathName = outputPath,
                 target = BuildTarget.StandaloneLinux64,
-                options = BuildOptions.None
+                options = BuildOptions.Development
             };
 
             var report = BuildPipeline.BuildPlayer(options);
@@ -29,6 +34,14 @@ namespace SWO1.Editor
             else
             {
                 Debug.LogError($"[BuildGame] ❌ 打包失败: {report.summary.result}");
+                foreach (var step in report.steps)
+                {
+                    foreach (var msg in step.messages)
+                    {
+                        if (msg.type == UnityEditor.Build.Reporting.LogType.Error)
+                            Debug.LogError(msg.content);
+                    }
+                }
             }
         }
 
@@ -44,7 +57,7 @@ namespace SWO1.Editor
             if (scenes.Count == 0)
             {
                 foreach (var f in Directory.GetFiles("Assets/Scenes", "*.unity"))
-                    scenes.Add(f);
+                    scenes.Add(f.Replace("\\", "/"));
             }
             return scenes.ToArray();
         }
