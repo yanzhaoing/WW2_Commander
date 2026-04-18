@@ -44,7 +44,7 @@ namespace SWO1.UI
         public const int GridWidth = 32;
         public const int GridHeight = 24;
         public const float CellSize = 1.0f;
-        public const float GridOffsetX = 18f;  // 沙盘右移偏移量，为左侧面板留空间
+        public const float GridOffsetX = 24f;  // 沙盘右移偏移量，为左侧面板留空间
         public const float MapWidthUnits = GridWidth * CellSize;
         public const float MapHeightUnits = GridHeight * CellSize;
 

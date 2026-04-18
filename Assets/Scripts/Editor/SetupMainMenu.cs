@@ -11,6 +11,7 @@ namespace SWO1.Editor
     public static class SetupMainMenu
     {
         private const string MenuPath = "WW2 Commander/Setup Main Menu";
+        private const string MenuPath2 = "WW2 Commander/Add Main Menu to GameScene";
 
         private static readonly Color C_BgDark      = HexColor("0d0d1a");
         private static readonly Color C_TitleColor   = HexColor("d4a84b");
@@ -48,6 +49,60 @@ namespace SWO1.Editor
             Debug.Log("[SetupMainMenu] ✅ 主菜单场景创建完成！");
             EditorUtility.DisplayDialog("WW2 Commander — 主菜单",
                 "主菜单场景搭建完成！\n\n请在 Build Settings 中添加场景:\n1. MainMenu\n2. GameScene",
+                "OK");
+        }
+
+        /// <summary>在当前游戏场景中添加主菜单 UI（不创建新场景）</summary>
+        [MenuItem(MenuPath2, priority = 52)]
+        public static void AddToCurrentScene()
+        {
+            // 找到现有 Canvas
+            var canvas = Object.FindFirstObjectByType<Canvas>();
+            if (canvas == null)
+            {
+                EditorUtility.DisplayDialog("错误", "当前场景没有 Canvas！请先运行 Setup 2D Scene。", "OK");
+                return;
+            }
+
+            // 检查是否已有主菜单
+            if (canvas.transform.Find("MainMenu") != null)
+            {
+                EditorUtility.DisplayDialog("提示", "主菜单已存在！", "OK");
+                return;
+            }
+
+            // 创建主菜单容器
+            var menuRoot = new GameObject("MainMenu");
+            menuRoot.transform.SetParent(canvas.transform, false);
+            var menuRT = menuRoot.AddComponent<RectTransform>();
+            Stretch(menuRT);
+
+            // 创建主菜单内容
+            CreateBackground(menuRoot.transform);
+            CreateTitle(menuRoot.transform);
+            CreateButtons(menuRoot.transform);
+            CreateTutorialPanel(menuRoot.transform);
+            CreateFooter(menuRoot.transform);
+
+            // 添加 MainMenuManager
+            var manager = menuRoot.AddComponent<SWO1.UI.MainMenuManager>();
+            manager.MainMenuRoot = menuRoot;
+
+            // 尝试找游戏 UI 根节点（通常是 LeftPanel + StatusOverviewPanel 等）
+            var leftPanel = canvas.transform.Find("LeftPanel");
+            if (leftPanel != null)
+            {
+                // 游戏 UI 默认隐藏，由 MainMenuManager 控制
+                leftPanel.gameObject.SetActive(false);
+                manager.GameUIRoot = leftPanel.gameObject;
+            }
+
+            Debug.Log("[SetupMainMenu] ✅ 主菜单已添加到当前游戏场景！");
+            EditorUtility.DisplayDialog("WW2 Commander",
+                "主菜单已添加到当前场景！\n\n" +
+                "MainMenuRoot = 主菜单容器\n" +
+                "GameUIRoot = LeftPanel (游戏 UI)\n\n" +
+                "点击 Play 即可测试。",
                 "OK");
         }
 

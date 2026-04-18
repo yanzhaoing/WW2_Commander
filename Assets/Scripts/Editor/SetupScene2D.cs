@@ -68,7 +68,7 @@ namespace SWO1.Editor
         }
 
         // 沙盘右移偏移量（为左侧面板留出空间）
-        private const float GridOffsetX = 18f;
+        private const float GridOffsetX = 24f;
 
         // ══════════════════════════════════════════════════
         // 2. 2D 摄像机（调整位置补偿左侧面板）
